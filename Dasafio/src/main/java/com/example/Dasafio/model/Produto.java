@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -20,6 +24,7 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idProduto")
 	private Integer id;
+	
 	private String nome;
 	private Integer quantidade;
 	private Double desconto;
@@ -35,6 +40,11 @@ public class Produto {
 			inverseJoinColumns = @JoinColumn(name = "idCategoria")
 	)
 	private List<Categoria>  categorias;
+	
+	@ManyToOne
+	@JoinColumn(name = "idPedido")
+	@JsonManagedReference
+	private Pedido pedido;
 	
 	public Integer getId() {
 		return id;
